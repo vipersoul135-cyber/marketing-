@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from functools import wraps
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='.', static_folder='.', static_url_path='')
 app.secret_key = 'supplylink_secret_key_123' 
 
 # Files to store data
@@ -69,6 +69,10 @@ def save_order(order):
             json.dump(orders, f, indent=4)
     except Exception as e:
         print(f"Save Error: {e}")
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
