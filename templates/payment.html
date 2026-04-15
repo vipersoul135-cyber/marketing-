@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SupplyLink | Secure Checkout</title>
+    <style>
+        :root {
+            --primary: #2563eb; --primary-dark: #1d4ed8; --accent: #7c3aed;
+            --success: #10b981; --bg: #f8fafc; --card-bg: #ffffff;
+            --text-main: #1e293b; --text-muted: #64748b; --border: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { background: #eaeff5; color: var(--text-main); line-height: 1.6; }
+        .container { min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        
+        .payment-card { background: white; padding: 40px; border-radius: 30px; box-shadow: 0 40px 100px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
+        .payment-header { text-align: center; margin-bottom: 2rem; }
+        .lock-icon { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+        .payment-header h2 { font-size: 1.6rem; color: var(--text-main); font-weight: 800; }
+        
+        .payment-summary { background: #f8fafc; padding: 20px; border-radius: 15px; margin-bottom: 25px; }
+        .total-row { display: flex; justify-content: space-between; align-items: center; }
+        .total-amount { font-size: 1.8rem; color: var(--primary); font-weight: 800; }
+        
+        .payment-methods { display: flex; gap: 10px; margin-bottom: 25px; }
+        .method-btn { flex: 1; padding: 12px; border: 2px solid var(--border); border-radius: 12px; text-align: center; cursor: pointer; transition: 0.3s; font-weight: 600; }
+        .method-btn input { display: none; }
+        .method-btn.active { border-color: var(--primary); background: rgba(37, 99, 235, 0.05); color: var(--primary); }
+        
+        .form-group { text-align: left; margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; color: var(--text-main); }
+        .form-group input { width: 100%; padding: 12px 15px; border: 1px solid var(--border); border-radius: 12px; font-size: 1.1rem; }
+        .form-row { display: flex; gap: 15px; }
+        
+        .btn-pay { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 15px; font-weight: 800; font-size: 1.1rem; cursor: pointer; margin-top: 10px; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); }
+        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .modal { background: white; padding: 40px; border-radius: 30px; text-align: center; max-width: 400px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); }
+        .btn-primary { padding: 12px 30px; border-radius: 12px; background: var(--primary); color: white; border: none; font-weight: 700; cursor: pointer; }
+    </style>
+</head>
+
+<body class="payment-page" data-order-id="{{ order.id }}">
+    <div class="container">
+        <!-- ... existing content ... -->
+        <div class="payment-card">
+            <header class="payment-header">
+                <span class="lock-icon">🔒</span>
+                <h2>Secure Checkout</h2>
+                <p>Order #{{ order.id }} • {{ order.shop }}</p>
+            </header>
+
+            <div class="payment-summary">
+                <div class="total-row">
+                    <span>Amount Due:</span>
+                    <strong class="total-amount">${{ total }}</strong>
+                </div>
+            </div>
+
+            <form id="payment-form" class="payment-form">
+                <div class="payment-methods">
+                    <label class="method-btn active">
+                        <input type="radio" name="method" value="card" checked>
+                        <span>Card</span>
+                    </label>
+                    <label class="method-btn">
+                        <input type="radio" name="method" value="upi">
+                        <span>UPI</span>
+                    </label>
+                </div>
+
+                <div id="card-inputs">
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <input type="text" id="card-num" placeholder="4444 4444 4444 4444" maxlength="19">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry</label>
+                            <input type="text" id="expiry" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="password" id="cvv" placeholder="•••" maxlength="3">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="upi-inputs" style="display:none;">
+                    <div class="form-group">
+                        <label>UPI ID</label>
+                        <input type="text" placeholder="username@okaxis">
+                    </div>
+                </div>
+
+                <button type="submit" id="pay-btn" class="btn-pay">Pay ${{ total }} Now</button>
+            </form>
+
+            <div class="payment-footer">
+                <p>Protected by SupplyLink Encryption</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Processing Overlay -->
+    <div class="modal-overlay" id="processing-overlay">
+        <div class="modal">
+            <div class="spinner"></div>
+            <h3>Authorizing Payment...</h3>
+            <p>Please do not refresh the page.</p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="payment-success">
+        <div class="modal">
+            <div class="modal-icon">🎉</div>
+            <h2>Payment Successful!</h2>
+            <p>Your order has been transmitted to Marketing Admin.</p>
+            <button class="btn-primary" onclick="window.location.href='/'">Back to Shop</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/supplylink.js') }}"></script>
+</body>
+
+</html>

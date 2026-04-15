@@ -1,0 +1,57 @@
+{
+    "admin": {
+        "password": "admin",
+        "role": "admin",
+        "name": "Marketing Head"
+    },
+    "shop1": {
+        "password": "shop1",
+        "role": "owner",
+        "name": "Corner Store"
+    },
+    "shop2": {
+        "password": "shop2",
+        "role": "owner",
+        "name": "Market Plaza"
+    },
+    "shop3": {
+        "password": "shop3",
+        "role": "owner",
+        "name": "Green Grocers"
+    },
+    "shop4": {
+        "password": "shop4",
+        "role": "owner",
+        "name": "Unity Mart"
+    },
+    "shop5": {
+        "password": "shop5",
+        "role": "owner",
+        "name": "Elite Sweets"
+    },
+    "shop6": {
+        "password": "shop6",
+        "role": "owner",
+        "name": "City Deli"
+    },
+    "shop7": {
+        "password": "shop7",
+        "role": "owner",
+        "name": "Neighborhood Fresh"
+    },
+    "shop8": {
+        "password": "shop8",
+        "role": "owner",
+        "name": "Family Choice"
+    },
+    "shop9": {
+        "password": "shop9",
+        "role": "owner",
+        "name": "Downtown Mart"
+    },
+    "shop10": {
+        "password": "shop10",
+        "role": "owner",
+        "name": "Peak Supplies"
+    }
+}
