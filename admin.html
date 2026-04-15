@@ -7,45 +7,250 @@
     <title>SupplyLink Admin | Marketing Head</title>
     <style>
         :root {
-            --primary: #2563eb; --primary-dark: #1d4ed8; --accent: #7c3aed;
-            --success: #10b981; --bg: #f8fafc; --card-bg: #ffffff;
-            --text-main: #1e293b; --text-muted: #64748b; --border: #e2e8f0;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent: #7c3aed;
+            --success: #10b981;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        body { background: var(--bg); color: var(--text-main); line-height: 1.6; }
-        .container { max-width: 1200px; margin: auto; padding: 20px; }
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .brand { display: flex; align-items: center; gap: 10px; }
-        .logo-icon { font-size: 2rem; background: white; padding: 8px; border-radius: 12px; box-shadow: var(--shadow); }
-        h1 { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
-        .badge { background: var(--success); color: white; padding: 2px 8px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; }
-        .header-actions { display: flex; align-items: center; gap: 15px; }
-        .btn-clear { background: #fef2f2; color: #ef4444; border: 1px solid #fee2e2; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-weight: 700; transition: 0.3s; }
-        .btn-clear:hover { background: #fee2e2; }
-        .btn-delete { background: #fff1f2; color: #f43f5e; border: none; padding: 5px 12px; border-radius: 8px; cursor: pointer; font-weight: bold; float: right; transition: 0.2s; }
-        .btn-delete:hover { background: #ffe4e6; }
-        .btn-refresh { padding: 8px 15px; border-radius: 10px; border: 1px solid var(--border); background: white; cursor: pointer; font-weight: 600; }
-        .btn-logout-small { color: var(--text-muted); font-size: 0.8rem; text-decoration: none; }
 
-        .admin-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px; }
-        .card { background: white; padding: 25px; border-radius: 25px; box-shadow: var(--shadow); }
-        .analytics-metrics { display: flex; gap: 15px; margin-top: 1rem; }
-        .metric { flex: 1; background: #f8fafc; padding: 15px; border-radius: 15px; text-align: center; }
-        .metric-val { font-size: 1.8rem; font-weight: 800; color: var(--primary); display: block; }
-        .metric-lbl { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
-        
-        .summary-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
-        .order-card { background: white; padding: 20px; border-radius: 20px; box-shadow: var(--shadow); margin-bottom: 15px; border-left: 5px solid var(--primary); }
-        .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .total-badge { background: var(--primary); color: white; padding: 4px 10px; border-radius: 8px; font-weight: 800; font-size: 0.9rem; }
-        .order-items-detail { list-style: none; padding: 10px 0; font-size: 0.9rem; color: var(--text-main); }
-        .order-items-detail li { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed #eee; }
-        .btn-complete { background: var(--success); color: white; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-weight: 700; }
-        
-        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
-        .toast { background: white; padding: 15px 25px; border-radius: 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border-left: 5px solid var(--primary); margin-bottom: 10px; animation: slideIn 0.4s ease; transition: 0.5s; }
-        @keyframes slideIn { from { transform: translateX(50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            background: white;
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .badge {
+            background: var(--success);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-clear {
+            background: #fef2f2;
+            color: #ef4444;
+            border: 1px solid #fee2e2;
+            padding: 8px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .btn-clear:hover {
+            background: #fee2e2;
+        }
+
+        .btn-delete {
+            background: #fff1f2;
+            color: #f43f5e;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            float: right;
+            transition: 0.2s;
+        }
+
+        .btn-delete:hover {
+            background: #ffe4e6;
+        }
+
+        .btn-refresh {
+            padding: 8px 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-logout-small {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .analytics-metrics {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .metric {
+            flex: 1;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .metric-val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+        }
+
+        .metric-lbl {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .order-card {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .total-badge {
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .order-items-detail {
+            list-style: none;
+            padding: 10px 0;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .order-items-detail li {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .btn-complete {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-left: 5px solid var(--primary);
+            margin-bottom: 10px;
+            animation: slideIn 0.4s ease;
+            transition: 0.5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 
@@ -67,8 +272,21 @@
         </header>
 
         <style>
-            .date-input { padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border); font-family: 'Outfit', sans-serif; font-weight: 600; color: var(--text-main); outline: none; transition: 0.3s; }
-            .date-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+            .date-input {
+                padding: 8px 12px;
+                border-radius: 10px;
+                border: 1px solid var(--border);
+                font-family: 'Outfit', sans-serif;
+                font-weight: 600;
+                color: var(--text-main);
+                outline: none;
+                transition: 0.3s;
+            }
+
+            .date-input:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            }
         </style>
 
         <section class="admin-grid">

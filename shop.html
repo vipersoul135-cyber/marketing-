@@ -221,7 +221,7 @@
     </style>
 </head>
 
-<body class="shop-portal" data-products='{{ products | tojson | safe }}'>
+<body class="shop-portal" data-products='[{"id": 1, "name": "Fresh Milk", "unit": "1 Liter", "price": 1.5, "category": "Dairy", "icon": "🥛"}, {"id": 2, "name": "Wheat Bread", "unit": "Loaf", "price": 2.2, "category": "Bakery", "icon": "🍞"}, {"id": 3, "name": "Organic Eggs", "unit": "Dozen", "price": 3.5, "category": "Dairy", "icon": "🥚"}, {"id": 4, "name": "Ground Coffee", "unit": "500g", "price": 8.0, "category": "Beverages", "icon": "☕"}, {"id": 5, "name": "Pure Butter", "unit": "250g", "price": 2.5, "category": "Dairy", "icon": "🧈"}, {"id": 6, "name": "Greek Yogurt", "unit": "500g", "price": 4.0, "category": "Dairy", "icon": "🍦"}, {"id": 7, "name": "Orange Juice", "unit": "1 Liter", "price": 3.0, "category": "Beverages", "icon": "🍊"}, {"id": 8, "name": "Digestive Biscuits", "unit": "Pack", "price": 1.8, "category": "Bakery", "icon": "🍪"}]'>
     <div class="container">
         <!-- HEADER -->
         <header>
@@ -230,10 +230,7 @@
                 <h1>SupplyLink</h1>
             </div>
             <div class="user-info">
-                <span class="welcome">
-                    Welcome,
-                    <strong>{{ user.name if user else "Guest" }}</strong>
-                </span>
+                    <strong>Owner</strong>
                 <a href="/logout" class="btn-logout">Logout</a>
             </div>
         </header>
@@ -245,28 +242,58 @@
 
         <!-- PRODUCTS -->
         <main class="product-grid" id="product-grid">
-            {% if products %}
-            {% for product in products %}
-            <div class="product-card" data-category="{{ product.category }}" data-name="{{ product.name | lower }}">
-
-                <div class="product-icon">{{ product.icon }}</div>
-
+            <div class="product-card" data-category="Dairy" data-name="fresh milk">
+                <div class="product-icon">🥛</div>
                 <div class="product-details">
-                    <h3>{{ product.name }}</h3>
-                    <p class="unit">{{ product.unit }}</p>
-                    <p class="price">${{ "%.2f"|format(product.price) }}</p>
+                    <h3>Fresh Milk</h3>
+                    <p class="unit">1 Liter</p>
+                    <p class="price">$1.50</p>
                 </div>
-
                 <div class="controls">
-                    <button class="btn-qty minus" onclick="updateQty({{ product.id }}, -1)">-</button>
-                    <span class="qty" id="qty-{{ product.id }}">0</span>
-                    <button class="btn-qty plus" onclick="updateQty({{ product.id }}, 1)">+</button>
+                    <button class="btn-qty minus" onclick="updateQty(1, -1)">-</button>
+                    <span class="qty" id="qty-1">0</span>
+                    <button class="btn-qty plus" onclick="updateQty(1, 1)">+</button>
                 </div>
             </div>
-            {% endfor %}
-            {% else %}
-            <div class="empty-state">No products found.</div>
-            {% endif %}
+            <div class="product-card" data-category="Bakery" data-name="wheat bread">
+                <div class="product-icon">🍞</div>
+                <div class="product-details">
+                    <h3>Wheat Bread</h3>
+                    <p class="unit">Loaf</p>
+                    <p class="price">$2.20</p>
+                </div>
+                <div class="controls">
+                    <button class="btn-qty minus" onclick="updateQty(2, -1)">-</button>
+                    <span class="qty" id="qty-2">0</span>
+                    <button class="btn-qty plus" onclick="updateQty(2, 1)">+</button>
+                </div>
+            </div>
+            <div class="product-card" data-category="Dairy" data-name="organic eggs">
+                <div class="product-icon">🥚</div>
+                <div class="product-details">
+                    <h3>Organic Eggs</h3>
+                    <p class="unit">Dozen</p>
+                    <p class="price">$3.50</p>
+                </div>
+                <div class="controls">
+                    <button class="btn-qty minus" onclick="updateQty(3, -1)">-</button>
+                    <span class="qty" id="qty-3">0</span>
+                    <button class="btn-qty plus" onclick="updateQty(3, 1)">+</button>
+                </div>
+            </div>
+            <div class="product-card" data-category="Beverages" data-name="ground coffee">
+                <div class="product-icon">☕</div>
+                <div class="product-details">
+                    <h3>Ground Coffee</h3>
+                    <p class="unit">500g</p>
+                    <p class="price">$8.00</p>
+                </div>
+                <div class="controls">
+                    <button class="btn-qty minus" onclick="updateQty(4, -1)">-</button>
+                    <span class="qty" id="qty-4">0</span>
+                    <button class="btn-qty plus" onclick="updateQty(4, 1)">+</button>
+                </div>
+            </div>
         </main>
 
         <!-- FOOTER -->

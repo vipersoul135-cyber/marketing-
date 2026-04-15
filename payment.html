@@ -44,20 +44,20 @@
     </style>
 </head>
 
-<body class="payment-page" data-order-id="{{ order.id }}">
+<body class="payment-page" data-order-id="1">
     <div class="container">
         <!-- ... existing content ... -->
         <div class="payment-card">
             <header class="payment-header">
                 <span class="lock-icon">🔒</span>
                 <h2>Secure Checkout</h2>
-                <p>Order #{{ order.id }} • {{ order.shop }}</p>
+                <p>Order #1 • Guest Shop</p>
             </header>
 
             <div class="payment-summary">
                 <div class="total-row">
                     <span>Amount Due:</span>
-                    <strong class="total-amount">${{ total }}</strong>
+                    <strong class="total-amount">$0.00</strong>
                 </div>
             </div>
 
@@ -97,7 +97,7 @@
                     </div>
                 </div>
 
-                <button type="submit" id="pay-btn" class="btn-pay">Pay ${{ total }} Now</button>
+                <button type="submit" id="pay-btn" class="btn-pay">Pay Now</button>
             </form>
 
             <div class="payment-footer">
@@ -125,7 +125,7 @@
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/supplylink.js') }}"></script>
+    <script src="./supplylink.js"></script>
 </body>
 
 </html>
